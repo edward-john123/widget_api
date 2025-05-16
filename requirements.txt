@@ -1,0 +1,27 @@
+# core libss
+Flask==2.3.3
+Flask-SQLAlchemy==3.1.1
+SQLAlchemy==2.0.25
+Flask-Marshmallow==1.2.1
+marshmallow==3.20.2
+Flask-Smorest==0.42.0
+
+# db migrations
+Flask-Migrate==4.0.7
+
+# WSGI server
+gunicorn==21.2.0
+
+# env Management
+python-dotenv==1.0.1
+
+# testing
+pytest==8.0.0
+Faker==22.5.0
+factory-boy==3.3.0
+
+# code quality & formatting
+black==24.2.0
+isort==5.13.2
+ruff==0.2.2
+pre-commit==3.6.2

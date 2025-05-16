@@ -1,0 +1,10 @@
+__pycache__/
+instance/
+.env
+.venv
+*.pyc
+*.db
+=0.30
+.pytest_cache
+.ropeproject
+.ruff_cache
