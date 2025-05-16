@@ -74,6 +74,7 @@ FLASK_RUN_MODE="PROD" gunicorn run:app --bind 0.0.0.0:5000
 FLASK_RUN_MODE="PROD" flask run
 docker-compose up --build -d
 ```
+Once up and running you can access Swagger-Ui via `0.0.0.0:5000/swagger-ui`
 
 ### 3. Run tests
 ```bash
