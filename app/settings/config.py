@@ -2,7 +2,6 @@ import os
 
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 # DB PATH SETTINGS
@@ -12,7 +11,7 @@ os.makedirs(db_dir, exist_ok=True)
 DATABASE_URL = f"sqlite:///{os.path.join(db_dir, 'widgets.db')}"
 
 # LOG FILE PATH SETTINGS
-log_dir = os.path.join(basedir, "logs")
+log_dir = os.path.join(basedir, "dev-logs")
 os.makedirs(log_dir, exist_ok=True)
 LOG_FILE = os.path.join(log_dir, "widget_api.log")
 

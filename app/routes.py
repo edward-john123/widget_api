@@ -7,7 +7,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from .extensions import db
 from .models import Widget
-from .schemas import WidgetSchema
+from .schemas import WidgetSchema, WidgetUpdateSchema
 
 blp = Blueprint(
     "widgets", __name__, url_prefix="/widgets", description="Operations on widgets"
@@ -38,3 +38,51 @@ class WidgetList(MethodView):
             abort(500, message=str(e))
         return widget
 
+
+@blp.route("/<int:widget_id>")
+class WidgetById(MethodView):
+    def _get_widget(self, widget_id: int) -> Widget:
+        widget = Widget.query.get(widget_id)
+        if not widget:
+            logger.error(f"Widget with ID {widget_id} not found")
+            abort(404, message="Widget not found.")
+        return widget
+
+    @blp.response(200, WidgetSchema)
+    def get(self, widget_id: int) -> Widget:
+        """Get a widget by ID"""
+        widget = self._get_widget(widget_id)
+        return widget
+
+    @blp.arguments(WidgetUpdateSchema)
+    @blp.response(200, WidgetSchema)
+    def put(self, update_data, widget_id: int) -> Widget:
+        """Update an existing widget"""
+        widget = self._get_widget(widget_id)
+
+        if "name" in update_data:
+            widget.name = update_data["name"]
+        if "num_parts" in update_data:
+            widget.num_parts = update_data["num_parts"]
+        try:
+            db.session.add(widget)
+            db.session.commit()
+            logger.info(f"Widget with ID {widget.id} Updated")
+        except SQLAlchemyError as e:
+            logger.error(f"DB Error occurred: {e}")
+            db.session.rollback()
+            abort(500, message=str(e))
+        return widget
+
+    @blp.response(204)
+    def delete(self, widget_id: int):
+        """Delete a widget"""
+        widget = self._get_widget(widget_id)
+        try:
+            db.session.delete(widget)
+            db.session.commit()
+        except SQLAlchemyError as e:
+            logger.error(f"DB Error occurred: {e}")
+            db.session.rollback()
+            abort(500, message=str(e))
+        return ""

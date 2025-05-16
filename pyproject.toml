@@ -1,0 +1,15 @@
+ [tool.ruff]
+ line-length = 88
+ select = ["E", "F", "W"]
+ exclude = ["migrations", ".venv", "venv", "env", ".*", "Dockerfile", "*.yml"]
+ 
+ [tool.black]
+ line-length = 88
+ target-version = ["py39"]
+ 
+ [tool.isort]
+ profile = "black"
+ 
+ [tool.pytest.ini_options]
+ addopts = "--cov=app --cov-report=html"
+ testpaths = ["tests"]
