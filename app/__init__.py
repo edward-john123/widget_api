@@ -5,6 +5,7 @@ from flask import Flask
 from flask_smorest import Api
 
 from .extensions import migrate, db
+from .routes import blp as WidgetBlueprint
 from .settings.config import Config
 
 
@@ -35,5 +36,6 @@ def create_app(config: Dict | None = None):
 
     # add blueprint for routes
     # 
+    api.register_blueprint(WidgetBlueprint)
 
     return app
